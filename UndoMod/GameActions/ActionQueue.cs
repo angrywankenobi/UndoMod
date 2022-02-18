@@ -12,16 +12,13 @@ namespace SharedEnvironment
         private int _pointer = -1;
         private int _head = -1;
 
-        public int Capacity { get => _queue.Length; }
+        public int Capacity => _queue.Length;
+        public int CurrentCount => _head + 1;
 
         public ActionQueue(int length)
         {
             _queue = new IActionQueueItem[length];
         }
-
-        public int Length => _queue.Length;
-
-        public int CurrentCount => _head + 1;
 
         public void Push(IActionQueueItem item)
         {
