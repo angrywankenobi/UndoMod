@@ -3,10 +3,6 @@ using ColossalFramework.UI;
 using ICities;
 using SharedEnvironment;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using UndoMod.Patches;
 using UnityEngine;
 
 namespace UndoMod

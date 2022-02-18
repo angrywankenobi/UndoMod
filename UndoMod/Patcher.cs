@@ -1,8 +1,6 @@
 ﻿using HarmonyLib;
-using System.ComponentModel;
 using System.Linq;
 using UndoMod.Patches;
-using UnityEngine;
 
 namespace UndoMod
 {

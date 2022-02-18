@@ -1,12 +1,7 @@
 ﻿using ColossalFramework;
 using ICities;
-using SharedEnvironment;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using UndoMod.UI;
-using UnityEngine;
 
 namespace UndoMod
 {
