@@ -15,15 +15,15 @@ namespace UndoMod.Patches
         static void Prefix(ushort segment)
         {
             if ((NetUtil.Segment(segment).m_flags != NetSegment.Flags.None) && PatchUtil.CheckIfObserving()) {
-                if (UndoMod.Instsance.Observing) {
+                if (UndoMod.Instance.Observing) {
                     try {
-                        var constructable = UndoMod.Instsance.WrappersDictionary.RegisterSegment(segment);
+                        var constructable = UndoMod.Instance.WrappersDictionary.RegisterSegment(segment);
                         constructable.ForceSetId(0);
-                        UndoMod.Instsance.ReportObservedAction(new ActionRelease(constructable));
+                        UndoMod.Instance.ReportObservedAction(new ActionRelease(constructable));
                     }
                     catch (Exception e) {
                         Debug.Log(e);
-                        UndoMod.Instsance.InvalidateAll();
+                        UndoMod.Instance.InvalidateAll();
                     }
                 } else {
                     //Invalidator.Instance.InvalidSegments.Add(segment);
@@ -52,18 +52,18 @@ namespace UndoMod.Patches
         static void Prefix(out WrappedNode __state, ushort node, ref NetNode data, bool checkDeleted, bool checkTouchable)
         {
             WrappedNode constructable = null;
-            if ((NetUtil.Node(node).m_flags != NetNode.Flags.None) && !UndoMod.Instsance.Invalidated && PreReleaseNodeImplementation_check(node, ref data, checkDeleted, checkTouchable)) {
-                if (UndoMod.Instsance.Observing) {
+            if ((NetUtil.Node(node).m_flags != NetNode.Flags.None) && !UndoMod.Instance.Invalidated && PreReleaseNodeImplementation_check(node, ref data, checkDeleted, checkTouchable)) {
+                if (UndoMod.Instance.Observing) {
                     try {
-                        if (NetUtil.Node(node).m_building == 0 || UndoMod.Instsance.ObservingOnlyBuildings == 0) {
-                            constructable = UndoMod.Instsance.WrappersDictionary.RegisterNode(node);
+                        if (NetUtil.Node(node).m_building == 0 || UndoMod.Instance.ObservingOnlyBuildings == 0) {
+                            constructable = UndoMod.Instance.WrappersDictionary.RegisterNode(node);
                             constructable.ForceSetId(0);
                         }
                         // We cannot report the node here because there still might be segments on it
                     }
                     catch (Exception e) {
                         Debug.Log(e);
-                        UndoMod.Instsance.InvalidateAll();
+                        UndoMod.Instance.InvalidateAll();
                     }
                 } else {
                     //Invalidator.Instance.InvalidNodes.Add(node);
@@ -77,18 +77,18 @@ namespace UndoMod.Patches
             WrappedNode constructable = __state;
             try {
                 if (constructable != null)
-                    if (UndoMod.Instsance.ObservingOnlyBuildings == 0) {
-                        if (!UndoMod.Instsance.PerformingAction) {
-                            UndoMod.Instsance.ReportObservedAction(new ActionRelease(constructable));
+                    if (UndoMod.Instance.ObservingOnlyBuildings == 0) {
+                        if (!UndoMod.Instance.PerformingAction) {
+                            UndoMod.Instance.ReportObservedAction(new ActionRelease(constructable));
                         }
                     } else {
-                        UndoMod.Instsance.WrappersDictionary.AddBuildingNode(constructable);
+                        UndoMod.Instance.WrappersDictionary.AddBuildingNode(constructable);
                     }
 
             }
             catch (Exception e) {
                 Debug.Log(e);
-                UndoMod.Instsance.InvalidateAll();
+                UndoMod.Instance.InvalidateAll();
             }
         }
 
@@ -147,14 +147,14 @@ namespace UndoMod.Patches
         {
             //Debug.Log("Harmony patch: create segment postfix");
             if (__result && PatchUtil.CheckIfObserving()) {
-                if (UndoMod.Instsance.Observing) {
+                if (UndoMod.Instance.Observing) {
                     try {
-                        var constructable = UndoMod.Instsance.WrappersDictionary.RegisterSegment(segment);
-                        UndoMod.Instsance.ReportObservedAction(new ActionCreate(constructable));
+                        var constructable = UndoMod.Instance.WrappersDictionary.RegisterSegment(segment);
+                        UndoMod.Instance.ReportObservedAction(new ActionCreate(constructable));
                     }
                     catch (Exception e) {
                         Debug.Log(e);
-                        UndoMod.Instsance.InvalidateAll();
+                        UndoMod.Instance.InvalidateAll();
                     }
                 } else {
                     //Invalidator.Instance.InvalidSegments.Add(segment);
@@ -170,22 +170,22 @@ namespace UndoMod.Patches
         static void Postfix(ref ushort node, bool __result)
         {
             if (__result && PatchUtil.CheckIfObserving()) {
-                if (UndoMod.Instsance.Observing) {
+                if (UndoMod.Instance.Observing) {
                     try {
-                        var constructable = UndoMod.Instsance.WrappersDictionary.RegisterNode(node);
-                        UndoMod.Instsance.ReportObservedAction(new ActionCreate(constructable));
+                        var constructable = UndoMod.Instance.WrappersDictionary.RegisterNode(node);
+                        UndoMod.Instance.ReportObservedAction(new ActionCreate(constructable));
                     }
                     catch (Exception e) {
                         Debug.Log(e);
-                        UndoMod.Instsance.InvalidateAll();
+                        UndoMod.Instance.InvalidateAll();
                     }
                 } else {
                     //Invalidator.Instance.InvalidNodes.Add(node);
                 }
             }
 
-            if (__result && UndoMod.Instsance.ObservingOnlyBuildings > 0) {
-                UndoMod.Instsance.WrappersDictionary.FixBuildingNode(node);
+            if (__result && UndoMod.Instance.ObservingOnlyBuildings > 0) {
+                UndoMod.Instance.WrappersDictionary.FixBuildingNode(node);
             }
         }
     }

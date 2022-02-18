@@ -148,7 +148,7 @@ namespace SharedEnvironment
         /*public void CollectGarbage(int queueLength)
         {
             if ((RegisteredNodes.Count + RegisteredSegments.Count + RegisteredBuildings.Count + RegisteredProps.Count + RegisteredTrees.Count)
-                //< UndoMod.UndoMod.Instsance.Queue.Length() * 30)
+                //< UndoMod.UndoMod.Instance.Queue.Length() * 30)
                 < 50)
             {
                 return;

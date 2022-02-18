@@ -10,7 +10,7 @@ namespace UndoMod.Patches
     {
         static void Prefix()
         {
-            UndoMod.Instsance.BeginObserving("Build tree", autoTerminate: true);
+            UndoMod.Instance.BeginObserving("Build tree", autoTerminate: true);
         }
     }
 }

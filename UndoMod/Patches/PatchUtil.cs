@@ -10,7 +10,7 @@ namespace UndoMod.Patches
     {
         internal static bool CheckIfObserving()
         {
-            return !UndoMod.Instsance.PerformingAction && !UndoMod.Instsance.Invalidated && UndoMod.Instsance.ObservingOnlyBuildings == 0;
+            return !UndoMod.Instance.PerformingAction && !UndoMod.Instance.Invalidated && UndoMod.Instance.ObservingOnlyBuildings == 0;
         }
 
         internal static MethodInfo Method(Type type, string name)

@@ -14,7 +14,7 @@ namespace UndoMod
     public class LoadingExtension : ILoadingExtension
     {
         private static LoadingExtension _instance;
-        public static LoadingExtension Instsance { get => _instance; }
+        public static LoadingExtension Instance { get => _instance; }
 
         public bool m_detoured = false;
         public bool m_inStandardGame = false;
@@ -72,7 +72,7 @@ namespace UndoMod
                 Patcher.UnpatchAll();
             }
             m_detoured = false;
-            UndoMod.Instsance.InvalidateAll(false);
+            UndoMod.Instance.InvalidateAll(false);
         }
 
         public void OnReleased()

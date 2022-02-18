@@ -24,7 +24,7 @@ namespace UndoMod
                 {
                     if(CheckCurrentTool())
                         Singleton<SimulationManager>.instance.AddAction(() => {
-                            UndoMod.Instsance.Undo();
+                            UndoMod.Instance.Undo();
                         });
                     _processed = true;
                 }
@@ -34,7 +34,7 @@ namespace UndoMod
                 {
                     if (CheckCurrentTool())
                         Singleton<SimulationManager>.instance.AddAction(() => {
-                            UndoMod.Instsance.Redo();
+                            UndoMod.Instance.Redo();
                         });
                     _processed = true;
                 }
@@ -80,13 +80,13 @@ namespace UndoMod
 
         private static void ScheduledObserving()
         {
-            if(LoadingExtension.Instsance.m_detoured)
+            if(LoadingExtension.Instance.m_detoured)
             {
                 if(_lastBeginObserving.AddSeconds(1) < DateTime.Now)
                 {
                     _lastBeginObserving = DateTime.Now;
                     Singleton<SimulationManager>.instance.AddAction(() => {
-                        UndoMod.Instsance.BeginObserving("<unknown>", "", true);
+                        UndoMod.Instance.BeginObserving("<unknown>", "", true);
                     });
                 }
             }

@@ -10,7 +10,7 @@ namespace UndoMod.Patches
     {
         static void Prefix()
         {
-            UndoMod.Instsance.BeginObserving("Build prop", autoTerminate: true);
+            UndoMod.Instance.BeginObserving("Build prop", autoTerminate: true);
         }
 
         private static MethodInfo original = PatchUtil.Method(typeof(PropTool), "CreateProp");

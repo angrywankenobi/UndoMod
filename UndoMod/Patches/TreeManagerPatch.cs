@@ -14,15 +14,15 @@ namespace UndoMod.Patches
         {
             ref TreeInstance data = ref ManagerUtils.Tree(tree);
             if (data.m_flags != 0 && PatchUtil.CheckIfObserving()) {
-                if (UndoMod.Instsance.Observing) {
+                if (UndoMod.Instance.Observing) {
                     try {
-                        var constructable = UndoMod.Instsance.WrappersDictionary.RegisterTree(tree);
+                        var constructable = UndoMod.Instance.WrappersDictionary.RegisterTree(tree);
                         constructable.ForceSetId(0);
-                        UndoMod.Instsance.ReportObservedAction(new ActionRelease(constructable));
+                        UndoMod.Instance.ReportObservedAction(new ActionRelease(constructable));
                     }
                     catch (Exception e) {
                         Debug.Log(e);
-                        UndoMod.Instsance.InvalidateAll();
+                        UndoMod.Instance.InvalidateAll();
                     }
                 } else {
                     //Invalidator.Instance.InvalidTrees.Add(tree);
@@ -38,20 +38,20 @@ namespace UndoMod.Patches
         static void Postfix(bool __result, ref uint tree)
         {
             if (__result && PatchUtil.CheckIfObserving()) {
-                if (UndoMod.Instsance.Observing) {
+                if (UndoMod.Instance.Observing) {
                     try {
-                        var constructable = UndoMod.Instsance.WrappersDictionary.RegisterTree(tree);
-                        UndoMod.Instsance.ReportObservedAction(new ActionCreate(constructable));
+                        var constructable = UndoMod.Instance.WrappersDictionary.RegisterTree(tree);
+                        UndoMod.Instance.ReportObservedAction(new ActionCreate(constructable));
                     }
                     catch (Exception e) {
                         Debug.Log(e);
-                        UndoMod.Instsance.InvalidateAll();
+                        UndoMod.Instance.InvalidateAll();
                     }
                 } else {
                     //
                 }
             }
-            UndoMod.Instsance.TerminateObservingIfVanilla();
+            UndoMod.Instance.TerminateObservingIfVanilla();
         }
     }
 }

@@ -16,7 +16,7 @@ namespace UndoMod.Patches
     {
         static void Prefix()
         {
-            UndoMod.Instsance.BeginObserving("Build building", autoTerminate: true);
+            UndoMod.Instance.BeginObserving("Build building", autoTerminate: true);
         }
     }
 }

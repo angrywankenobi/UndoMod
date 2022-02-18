@@ -16,15 +16,15 @@ namespace UndoMod.Patches
         {
             ref PropInstance data = ref ManagerUtils.Prop(prop);
             if (data.m_flags != 0 && PatchUtil.CheckIfObserving()) {
-                if (UndoMod.Instsance.Observing) {
+                if (UndoMod.Instance.Observing) {
                     try {
-                        var constructable = UndoMod.Instsance.WrappersDictionary.RegisterProp(prop);
+                        var constructable = UndoMod.Instance.WrappersDictionary.RegisterProp(prop);
                         constructable.ForceSetId(0);
-                        UndoMod.Instsance.ReportObservedAction(new ActionRelease(constructable));
+                        UndoMod.Instance.ReportObservedAction(new ActionRelease(constructable));
                     }
                     catch (Exception e) {
                         Debug.Log(e);
-                        UndoMod.Instsance.InvalidateAll();
+                        UndoMod.Instance.InvalidateAll();
                     }
                 } else {
                     //Invalidator.Instance.InvalidProps.Add(Prop);
@@ -53,20 +53,20 @@ namespace UndoMod.Patches
         static void Postfix(bool __result, ref ushort prop)
         {
             if (__result && PatchUtil.CheckIfObserving()) {
-                if (UndoMod.Instsance.Observing) {
+                if (UndoMod.Instance.Observing) {
                     try {
-                        var constructable = UndoMod.Instsance.WrappersDictionary.RegisterProp(prop);
-                        UndoMod.Instsance.ReportObservedAction(new ActionCreate(constructable));
+                        var constructable = UndoMod.Instance.WrappersDictionary.RegisterProp(prop);
+                        UndoMod.Instance.ReportObservedAction(new ActionCreate(constructable));
                     }
                     catch (Exception e) {
                         Debug.Log(e);
-                        UndoMod.Instsance.InvalidateAll();
+                        UndoMod.Instance.InvalidateAll();
                     }
                 } else {
                     //Invalidator.Instance.InvalidProps.Add(prop);
                 }
             }
-            UndoMod.Instsance.TerminateObservingIfVanilla();
+            UndoMod.Instance.TerminateObservingIfVanilla();
         }
 
         private static MethodInfo original = PatchUtil.Method(typeof(PropManager), "CreateProp");

@@ -11,12 +11,12 @@ namespace UndoMod.Patches
     {
         static void Prefix()
         {
-            UndoMod.Instsance.BeginObserving("Build roads");
+            UndoMod.Instance.BeginObserving("Build roads");
         }
 
         static void Finalizer(Exception __exception)
         {
-            UndoMod.Instsance.FinalizeObserving(__exception);
+            UndoMod.Instance.FinalizeObserving(__exception);
         }
     }
 }

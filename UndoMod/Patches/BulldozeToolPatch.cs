@@ -9,12 +9,12 @@ namespace UndoMod.Patches
     {
         static void Prefix()
         {
-            UndoMod.Instsance.BeginObserving("Remove segment");
+            UndoMod.Instance.BeginObserving("Remove segment");
         }
 
         static void Finalizer(Exception __exception)
         {
-            UndoMod.Instsance.FinalizeObserving(__exception);
+            UndoMod.Instance.FinalizeObserving(__exception);
         }
     }
 
@@ -24,12 +24,12 @@ namespace UndoMod.Patches
     {
         static void Prefix()
         {
-            UndoMod.Instsance.BeginObserving("Remove node");
+            UndoMod.Instance.BeginObserving("Remove node");
         }
 
         static void Finalizer(Exception __exception)
         {
-            UndoMod.Instsance.FinalizeObserving(__exception);
+            UndoMod.Instance.FinalizeObserving(__exception);
         }
     }
 
@@ -39,12 +39,12 @@ namespace UndoMod.Patches
     {
         static void Prefix()
         {
-            UndoMod.Instsance.BeginObserving("Remove building");
+            UndoMod.Instance.BeginObserving("Remove building");
         }
 
         static void Finalizer(Exception __exception)
         {
-            UndoMod.Instsance.FinalizeObserving(__exception);
+            UndoMod.Instance.FinalizeObserving(__exception);
         }
     }
 
@@ -54,12 +54,12 @@ namespace UndoMod.Patches
     {
         static void Prefix()
         {
-            UndoMod.Instsance.BeginObserving("Remove tree");
+            UndoMod.Instance.BeginObserving("Remove tree");
         }
 
         static void Finalizer(Exception __exception)
         {
-            UndoMod.Instsance.FinalizeObserving(__exception);
+            UndoMod.Instance.FinalizeObserving(__exception);
         }
     }
 
@@ -69,12 +69,12 @@ namespace UndoMod.Patches
     {
         static void Prefix()
         {
-            UndoMod.Instsance.BeginObserving("Remove prop");
+            UndoMod.Instance.BeginObserving("Remove prop");
         }
 
         static void Finalizer(Exception __exception)
         {
-            UndoMod.Instsance.FinalizeObserving(__exception);
+            UndoMod.Instance.FinalizeObserving(__exception);
         }
     }
 }

@@ -15,7 +15,7 @@ namespace UndoMod
     public class UndoMod
     {
         private static UndoMod _instance;
-        public static UndoMod Instsance { get
+        public static UndoMod Instance { get
             {
                 if (_instance == null)
                     _instance = new UndoMod();
@@ -77,7 +77,7 @@ namespace UndoMod
 
         public void BeginObserving(string actionName/*, bool onlyBuildings = false*/, string modname = "Vanilla", bool autoObserving = false, bool autoTerminate = false)
         {
-            if(!LoadingExtension.Instsance.m_detoured)
+            if(!LoadingExtension.Instance.m_detoured)
             {
                 return;
             }
@@ -156,7 +156,7 @@ namespace UndoMod
         {
             if (item != null)
             {
-                if (ModInfo.sa_ignoreCosts.value || !LoadingExtension.Instsance.m_inStandardGame)
+                if (ModInfo.sa_ignoreCosts.value || !LoadingExtension.Instance.m_inStandardGame)
                 {
                     var aitem = item as ActionQueueItem;
                     if (aitem != null)

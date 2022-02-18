@@ -15,19 +15,19 @@ namespace UndoMod.Patches
     {
         static void Prefix(ushort building)
         {
-            UndoMod.Instsance.ObservingOnlyBuildings++;
+            UndoMod.Instance.ObservingOnlyBuildings++;
             ref Building data = ref ManagerUtils.BuildingS(building);
-            if ((data.m_flags != Building.Flags.None && (data.m_flags & Building.Flags.Deleted) == Building.Flags.None) && !UndoMod.Instsance.PerformingAction
-                    && !UndoMod.Instsance.Invalidated) {
-                if (UndoMod.Instsance.Observing) {
+            if ((data.m_flags != Building.Flags.None && (data.m_flags & Building.Flags.Deleted) == Building.Flags.None) && !UndoMod.Instance.PerformingAction
+                    && !UndoMod.Instance.Invalidated) {
+                if (UndoMod.Instance.Observing) {
                     try {
-                        var constructable = UndoMod.Instsance.WrappersDictionary.RegisterBuilding(building);
+                        var constructable = UndoMod.Instance.WrappersDictionary.RegisterBuilding(building);
                         constructable.ForceSetId(0);
-                        UndoMod.Instsance.ReportObservedAction(new ActionRelease(constructable));
+                        UndoMod.Instance.ReportObservedAction(new ActionRelease(constructable));
                     }
                     catch (Exception e) {
                         Debug.Log(e);
-                        UndoMod.Instsance.InvalidateAll();
+                        UndoMod.Instance.InvalidateAll();
                     }
                 } else {
                     //Invalidator.Instance.InvalidBuildings.Add(building);
@@ -37,7 +37,7 @@ namespace UndoMod.Patches
 
         static void Finalizer()
         {
-            UndoMod.Instsance.ObservingOnlyBuildings--;
+            UndoMod.Instance.ObservingOnlyBuildings--;
         }
     }
 
@@ -47,28 +47,28 @@ namespace UndoMod.Patches
     {
         static void Prefix()
         {
-            UndoMod.Instsance.ObservingOnlyBuildings++;
+            UndoMod.Instance.ObservingOnlyBuildings++;
         }
 
         static void Finalizer(bool __result, ref ushort building, Exception __exception)
         {
-            UndoMod.Instsance.ObservingOnlyBuildings--;
-            if (__result && __exception == null && !UndoMod.Instsance.PerformingAction && !UndoMod.Instsance.Invalidated /*&& CheckCaller()*/) {
-                if (UndoMod.Instsance.Observing) {
+            UndoMod.Instance.ObservingOnlyBuildings--;
+            if (__result && __exception == null && !UndoMod.Instance.PerformingAction && !UndoMod.Instance.Invalidated /*&& CheckCaller()*/) {
+                if (UndoMod.Instance.Observing) {
                     try {
-                        var constructable = UndoMod.Instsance.WrappersDictionary.RegisterBuilding(building);
-                        UndoMod.Instsance.ReportObservedAction(new ActionCreate(constructable));
+                        var constructable = UndoMod.Instance.WrappersDictionary.RegisterBuilding(building);
+                        UndoMod.Instance.ReportObservedAction(new ActionCreate(constructable));
                     }
                     catch (Exception e) {
                         Debug.Log(e);
-                        UndoMod.Instsance.InvalidateAll();
+                        UndoMod.Instance.InvalidateAll();
                     }
                 } else {
                     //Invalidator.Instance.InvalidBuildings.Add(building);
                 }
             }
-            if (UndoMod.Instsance.ObservingOnlyBuildings == 0) {
-                UndoMod.Instsance.TerminateObservingIfVanilla();
+            if (UndoMod.Instance.ObservingOnlyBuildings == 0) {
+                UndoMod.Instance.TerminateObservingIfVanilla();
             }
         }
     }
@@ -79,7 +79,7 @@ namespace UndoMod.Patches
     {
         static void Postfix()
         {
-            UndoMod.Instsance.InvalidateAll(false);
+            UndoMod.Instance.InvalidateAll(false);
         }
     }
 }

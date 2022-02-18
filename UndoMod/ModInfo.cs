@@ -81,7 +81,7 @@ namespace UndoMod
                     int val;
                     if (int.TryParse(text, out val) && val > 0)
                     {
-                        UndoMod.Instsance.ChangeQueueCapacity(val);
+                        UndoMod.Instance.ChangeQueueCapacity(val);
                         sa_queueCapacity.value = val;
                     }
                     else
