@@ -13,37 +13,25 @@ namespace UndoMod
 
         public override void OnUpdate(float realTimeDelta, float simulationTimeDelta)
         {
-            if (ModInfo.sc_undo.IsPressed())
+            if (ModInfo.sc_undo.IsPressed() && !_processed)
             {
-                if(!_processed)
-                {
-                    if(CheckCurrentTool())
-                        Singleton<SimulationManager>.instance.AddAction(() => {
-                            UndoMod.Instance.Undo();
-                        });
-                    _processed = true;
-                }
-            } else if (ModInfo.sc_redo.IsPressed())
+                if(CheckCurrentTool())
+                    Singleton<SimulationManager>.instance.AddAction(() => {
+                        UndoMod.Instance.Undo();
+                    });
+                _processed = true;
+            } else if (ModInfo.sc_redo.IsPressed() && !_processed)
             {
-                if (!_processed)
-                {
-                    if (CheckCurrentTool())
-                        Singleton<SimulationManager>.instance.AddAction(() => {
-                            UndoMod.Instance.Redo();
-                        });
-                    _processed = true;
-                }
-            }
-            else if (ModInfo.sc_peek.IsPressed())
+                if (CheckCurrentTool())
+                    Singleton<SimulationManager>.instance.AddAction(() => {
+                        UndoMod.Instance.Redo();
+                    });
+                _processed = true;
+            } else if (ModInfo.sc_peek.IsPressed() && !_processed)
             {
-                if (!_processed)
-                {
-                    if (CheckCurrentTool())
-                        PeekUndoPanel.Instance.Enable();
-                    _processed = true;
-                }
-            }
-            else
+                if (CheckCurrentTool()) PeekUndoPanel.Instance.Enable();
+                _processed = true;
+            } else
             {
                 PeekUndoPanel.Instance.Disable();
                 _processed = false;

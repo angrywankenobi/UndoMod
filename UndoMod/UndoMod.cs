@@ -141,7 +141,7 @@ namespace UndoMod
             IActionQueueItem item = Queue.Previous();
             UndoRedoImpl(item, false);
         }
-
+         
         public void Redo()
         {
             IActionQueueItem item = Queue.Next();
