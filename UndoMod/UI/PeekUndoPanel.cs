@@ -50,7 +50,7 @@ namespace UndoMod.UI
         void OnGUI()
         {
             float Width = 400;
-            float Height = Mathf.Clamp(UndoMod.Instance.Queue.CurrentCount() * label_height + 20, 300, Mathf.Min( Screen.height - 100, label_height*max_length+20 ));
+            float Height = Mathf.Clamp(UndoMod.Instance.Queue.CurrentCount* label_height + 20, 300, Mathf.Min( Screen.height - 100, label_height*max_length+20 ));
 
             Rect windowRect = new Rect((Screen.width - Width) / 2, (Screen.height - Height) / 2, Width, Height);
             GUI.Window(665, windowRect, _populateWindow, "Undo/Redo Queue");
@@ -60,7 +60,7 @@ namespace UndoMod.UI
         {
             GUILayout.BeginVertical();
 
-            int offset = UndoMod.Instance.Queue.CurrentCount() - max_length;
+            int offset = UndoMod.Instance.Queue.CurrentCount- max_length;
             using (var sequenceEnum = UndoMod.Instance.Queue.GetEnumerator())
             {
                 while (sequenceEnum.MoveNext())

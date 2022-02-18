@@ -19,15 +19,9 @@ namespace SharedEnvironment
             _queue = new IActionQueueItem[length];
         }
 
-        public int Length()
-        {
-            return _queue.Length;
-        }
+        public int Length => _queue.Length;
 
-        public int CurrentCount()
-        {
-            return _head + 1;
-        }
+        public int CurrentCount => _head + 1;
 
         public void Push(IActionQueueItem item)
         {
