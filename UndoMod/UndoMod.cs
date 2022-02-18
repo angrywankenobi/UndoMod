@@ -150,50 +150,41 @@ namespace UndoMod
 
         private void UndoRedoImpl(IActionQueueItem item, bool redo)
         {
-            if (item != null)
+            if (item == null)
             {
-                if (ModInfo.sa_ignoreCosts.value || !LoadingExtension.Instance.m_inStandardGame)
+                PlaySound(UIView.GetAView().defaultDisabledClickSound);
+                return;
+            }
+            
+            if (ModInfo.sa_ignoreCosts.value || !LoadingExtension.Instance.m_inStandardGame)
+            {
+                var aitem = item as ActionQueueItem;
+                if (aitem != null)
                 {
-                    var aitem = item as ActionQueueItem;
-                    if (aitem != null)
-                    {
-                        aitem.DoCost = 0;
-                    }
+                    aitem.DoCost = 0;
                 }
-                Singleton<SimulationManager>.instance.AddAction(() => {
-                    //Debug.Log("Action " + item);
-                    PerformingAction = true;
-                    if (!(redo ? item.Redo() : item.Undo()))
-                    {
-                        InvalidateAll();
-                        PlayDisabledSound();
-                    }
-                    else
-                    {
-                        PlayEnabledSound();
-                    }
-                    PerformingAction = false;
-                });
             }
-            else
-            {
-                PlayDisabledSound();
-            }
+            Singleton<SimulationManager>.instance.AddAction(() => {
+                //Debug.Log("Action " + item);
+                PerformingAction = true;
+                if (!(redo ? item.Redo() : item.Undo()))
+                {
+                    InvalidateAll();
+                    PlaySound(UIView.GetAView().defaultDisabledClickSound);
+                }
+                else
+                {
+                    PlaySound(UIView.GetAView().defaultClickSound);
+                }
+                PerformingAction = false;
+            });
         }
 
-        private void PlayEnabledSound()
+        private void PlaySound(AudioClip sound)
         {
-            if (UIView.GetAView().defaultClickSound != null && UIView.playSoundDelegate != null)
+            if (sound != null && UIView.playSoundDelegate != null)
             {
-                UIView.playSoundDelegate(UIView.GetAView().defaultClickSound, 1f);
-            }
-        }
-
-        private void PlayDisabledSound()
-        {
-            if (UIView.GetAView().defaultDisabledClickSound != null && UIView.playSoundDelegate != null)
-            {
-                UIView.playSoundDelegate(UIView.GetAView().defaultDisabledClickSound, 1f);
+                UIView.playSoundDelegate(sound, 1f);
             }
         }
 
