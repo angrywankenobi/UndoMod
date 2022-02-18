@@ -42,23 +42,17 @@ namespace UndoMod
 
         private bool CheckCurrentTool()
         {
-            if(!ModInfo.sa_disableShortcuts.value)
-            {
-                return true;
-            }
+            if(!ModInfo.sa_disableShortcuts.value) return true;
 
             ToolBase tool = ToolsModifierControl.toolController.CurrentTool;
-            string toolName = tool.GetType().Name;
-            if (
+
+            return (
                 tool is DefaultTool ||
                 tool is NetTool ||
                 tool is BuildingTool ||
                 tool is PropTool ||
                 tool is TreeTool ||
-                toolName == "ForestTool")
-            { return true; }
-
-            return false;
+                tool.GetType().Name == "ForestTool");
         }
 
         private static void ScheduledObserving()
