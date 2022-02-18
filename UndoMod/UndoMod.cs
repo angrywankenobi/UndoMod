@@ -71,16 +71,14 @@ namespace UndoMod
             }
         }
 
-        public void BeginObserving(string actionName/*, bool onlyBuildings = false*/, string modname = "Vanilla", bool autoObserving = false, bool autoTerminate = false)
+        public void BeginObserving(string actionName, string modname = "Vanilla", bool autoObserving = false, bool autoTerminate = false)
         {
-            if(!LoadingExtension.Instance.m_detoured)
-            {
-                return;
-            }
-            if(autoObserving && Observing && ObservedItem != null && !ObservedItem.AutoObserving)
-            {
-                return;
-            }
+            if(
+                !LoadingExtension.Instance.m_detoured ||
+                autoObserving && Observing && ObservedItem != null && 
+                !ObservedItem.AutoObserving
+            ) return;
+
             if(Observing)
             {
                 EndObserving();
@@ -92,7 +90,6 @@ namespace UndoMod
             ObservedCashBalance = EconomyManager.instance.InternalCashAmount;
             Observing = true;
             Invalidated = false;
-            //ObservingOnlyBuildings = onlyBuildings;
         }
 
         public void FinalizeObserving(Exception e)
@@ -113,7 +110,6 @@ namespace UndoMod
                     long moneyDelta = ObservedCashBalance - EconomyManager.instance.InternalCashAmount;
                     ObservedItem.DoCost = (int)moneyDelta;
                     Queue.Push(ObservedItem);
-                    //Debug.Log("Pushing: " + ObservedItem);
                 }
                 ObservedItem = null;
                 Observing = false;
@@ -130,7 +126,6 @@ namespace UndoMod
             }
             Queue.Clear();
             WrappersDictionary.Clear();
-            //Invalidator.Instance.Clear();
             Observing = false;
             ObservingOnlyBuildings = 0;
             Invalidated = true;
